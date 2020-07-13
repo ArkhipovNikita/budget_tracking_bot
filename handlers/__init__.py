@@ -1,2 +1,2 @@
 from .adding_expense import *
-from .helpers import *
+from .general import *
