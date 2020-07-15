@@ -5,8 +5,8 @@ from actions_lib.general import set_next_state_and_call_on_entry, ActionResult, 
 
 def create_options_keyboard(options):
     keyboard = InlineKeyboardMarkup(resize_keyboard=True)
-    for opt in options:
-        keyboard.add(InlineKeyboardButton(opt, callback_data=opt))
+    for i, opt in enumerate(options):
+        keyboard.add(InlineKeyboardButton(opt, callback_data=str(i)))
     return keyboard
 
 
@@ -19,9 +19,9 @@ def send_options_keyboard_callback(options, text, next_state=None, next_action=N
     return send_options_keyboard
 
 
-def process_option_selection_callback(opt_key, next_state=None, next_action=None):
+def process_option_selection_callback(opt_key, options, next_state=None, next_action=None):
     @set_next_state_and_call_on_entry(next_state, next_action)
     async def process_option_selection(query, state):
-        await state.update_data({opt_key: query.data})
+        await state.update_data({opt_key: options[int(query.data)]})
         return ActionResult.SUCCESS
     return process_option_selection

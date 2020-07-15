@@ -42,6 +42,6 @@ def process_custom_date_callback(next_state=None, next_action=None):
         selected, date = await telegramcalendar.process_calendar_selection(bot, query)
         if not selected:
             return ActionResult.FAILED
-        await state.update_data(date=query.data)
+        await state.update_data(date=date.strftime('%m.%d.%Y'))
         return ActionResult.SUCCESS
     return process_custom_date_option

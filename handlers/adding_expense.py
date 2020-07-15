@@ -5,6 +5,8 @@ from actions_lib import send_options_keyboard_callback, process_option_selection
     process_custom_date_callback, save_data_callback
 from actions_lib.write_description import process_writing_desc_callback
 from actions_lib.write_sum import process_writing_sum_callback
+from googlesheet import CATEGORIES_WKS_NAME, EXPENSE_CATEGORIES_RANGE, ACCOUNTS_WKS_NAME, ACCOUNT_OPTIONS_RANGE
+from googlesheet.lib import get_options
 from misc import dp
 
 
@@ -17,13 +19,9 @@ class AddingExpense(StatesGroup):
     choosing_account = State()
 
 
-# взять с таблицы бюджета
-EXPENSE_CATEGORIES = [
-    'дом',
-    'машина',
-    '...',
-]
-ACCOUNT_OPTIONS = ['Счет1', 'Счет2', '...']
+# update values when requested
+EXPENSE_CATEGORIES = get_options(CATEGORIES_WKS_NAME, EXPENSE_CATEGORIES_RANGE)
+ACCOUNT_OPTIONS = get_options(ACCOUNTS_WKS_NAME, ACCOUNT_OPTIONS_RANGE)
 
 # CHOOSE CATEGORY
 dp.register_message_handler(
@@ -34,6 +32,7 @@ dp.register_message_handler(
 )
 dp.register_callback_query_handler(
     process_option_selection_callback(opt_key='category',
+                                      options=EXPENSE_CATEGORIES,
                                       next_state=AddingExpense.choosing_date,
                                       next_action=send_options_keyboard_callback(
                                           options=DATE_OPTIONS,
@@ -48,18 +47,18 @@ dp.register_callback_query_handler(
     process_today_callback(next_state=AddingExpense.choosing_sum,
                            next_action=send_or_edit_message_callback(send_or_edit=1,
                                                                      text='Write sum')),
-    lambda x: x.data == 'Today', state=AddingExpense.choosing_date
+    lambda x: x.data == str(DATE_OPTIONS.index('Today')), state=AddingExpense.choosing_date
 )
 dp.register_callback_query_handler(
     process_yesterday_callback(next_state=AddingExpense.choosing_sum,
                                next_action=send_or_edit_message_callback(send_or_edit=1,
                                                                          text='Write sum')),
-    lambda x: x.data == 'Yesterday', state=AddingExpense.choosing_date
+    lambda x: x.data == str(DATE_OPTIONS.index('Yesterday')), state=AddingExpense.choosing_date
 )
 dp.register_callback_query_handler(
     send_custom_date_callback(send_or_edit=1,
                               next_state=AddingExpense.choosing_custom_date),
-    lambda x: x.data == 'Custom date', state=AddingExpense.choosing_date
+    lambda x: x.data == str(DATE_OPTIONS.index('Custom date')), state=AddingExpense.choosing_date
 )
 dp.register_callback_query_handler(
     process_custom_date_callback(next_state=AddingExpense.choosing_sum,
@@ -87,6 +86,7 @@ dp.register_message_handler(
 # CHOOSE ACCOUNT
 dp.register_callback_query_handler(
     process_option_selection_callback(opt_key='account',
+                                      options=ACCOUNT_OPTIONS,
                                       next_state=default_state,
                                       next_action=save_data_callback()),
     state=AddingExpense.choosing_account

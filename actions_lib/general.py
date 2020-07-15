@@ -3,6 +3,7 @@ from enum import Enum
 
 from aiogram.dispatcher.filters.state import default_state
 
+from googlesheet import googlesheet_save_data, Expense
 from misc import bot
 
 
@@ -62,13 +63,13 @@ async def alert(query, text, sec=2):
     await bot.delete_message(chat_id=msg.chat.id, message_id=msg.message_id)
 
 
+# add parameter: func that saves data
 def save_data_callback():
     async def save_data(query, state):
-        await bot.send_message(
-            chat_id=query.from_user.id,
-            text=str(await state.get_data()))
+        data = await state.get_data()
+        await bot.delete_message(chat_id=query.from_user.id, message_id=query.message.message_id)
+        googlesheet_save_data(data, Expense)
         await state.finish()
-        # await send_or_edit_message(query, text=str(await state.get_data()))
     return save_data
 
 
