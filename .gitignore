@@ -1,7 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Python template
+
 # Mine
-.env
 **/.DS_Store
 **/client_id.json
 **/telegrambotwrite-1594670249111-247d4243e67c.json

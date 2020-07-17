@@ -1,12 +1,12 @@
 import logging
+import os
 
-import environ
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
-env = environ.Env()
-environ.Env.read_env()
+from middlewares import AccessMiddleware
 
-bot = Bot(token=env.str('TOKEN'))
+bot = Bot(os.environ['TOKEN'])
 dp = Dispatcher(bot, storage=MemoryStorage())
+dp.middleware.setup(AccessMiddleware(int(os.environ['ACCESS_ID'])))
 logging.basicConfig(level=logging.INFO)
