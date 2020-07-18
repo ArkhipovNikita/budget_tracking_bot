@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from actions_lib.general import set_next_state_and_call_on_entry, ActionResult, send_or_edit_message
+from actions.general import set_next_state_and_call_on_entry, ActionResult, send_or_edit_message
 
 
 def create_options_keyboard(options):

@@ -1,4 +1,4 @@
-from actions_lib.general import set_next_state_and_call_on_entry, ActionResult, alert
+from actions.general import set_next_state_and_call_on_entry, ActionResult
 
 
 def process_num(num: str):

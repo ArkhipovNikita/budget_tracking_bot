@@ -1,6 +1,6 @@
 import string
 
-from googlesheet.misc import spreadsheet
+from utils.googlespreadsheet.loader import spreadsheet
 
 
 class InvalidRangeError(Exception):

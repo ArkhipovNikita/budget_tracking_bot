@@ -1,13 +1,13 @@
 from aiogram.dispatcher.filters.state import StatesGroup, State, default_state
 
-from actions_lib import send_options_keyboard_callback, process_option_selection_callback, DATE_OPTIONS, \
+from actions import send_options_keyboard_callback, process_option_selection_callback, DATE_OPTIONS, \
     process_today_callback, send_or_edit_message_callback, process_yesterday_callback, send_custom_date_callback, \
     process_custom_date_callback, save_data_callback
-from actions_lib.write_description import process_writing_desc_callback
-from actions_lib.write_sum import process_writing_sum_callback
-from googlesheet import CATEGORIES_WKS_NAME, EXPENSE_CATEGORIES_RANGE, ACCOUNTS_WKS_NAME, ACCOUNT_OPTIONS_RANGE
-from googlesheet.lib import get_options
-from misc import dp
+from actions.write_description import process_writing_desc_callback
+from actions.write_sum import process_writing_sum_callback
+from utils.googlespreadsheet import CATEGORIES_WKS_NAME, EXPENSE_CATEGORIES_RANGE, ACCOUNTS_WKS_NAME, ACCOUNT_OPTIONS_RANGE
+from utils.googlespreadsheet.lib import get_options
+from loader import dp
 
 
 class AddingExpense(StatesGroup):

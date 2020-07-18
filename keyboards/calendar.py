@@ -1,13 +1,3 @@
-#!/usr/bin/env python3
-#
-# A library that allows to create an inline calendar keyboard.
-# grcanosa https://github.com/grcanosa
-#
-"""
-Base methods for calendar keyboard creation and processing.
-"""
-
-# from telegram import InlineKeyboardButton, InlineKeyboardMarkup,ReplyKeyboardRemove
 import datetime
 import calendar
 
@@ -49,16 +39,15 @@ def create_calendar(year=None, month=None):
     for week in my_calendar:
         row = []
         for day in week:
-            if (day == 0):
+            if day == 0:
                 row.append(InlineKeyboardButton(" ", callback_data=data_ignore))
             else:
                 row.append(InlineKeyboardButton(str(day), callback_data=create_callback_data("DAY", year, month, day)))
         keyboard.add(*row)
     # Last row - Buttons
-    row = []
-    row.append(InlineKeyboardButton("<", callback_data=create_callback_data("PREV-MONTH", year, month, day)))
-    row.append(InlineKeyboardButton(" ", callback_data=data_ignore))
-    row.append(InlineKeyboardButton(">", callback_data=create_callback_data("NEXT-MONTH", year, month, day)))
+    row = [InlineKeyboardButton("<", callback_data=create_callback_data("PREV-MONTH", year, month, day)),
+           InlineKeyboardButton(" ", callback_data=data_ignore),
+           InlineKeyboardButton(">", callback_data=create_callback_data("NEXT-MONTH", year, month, day))]
     keyboard.add(*row)
     return keyboard
 

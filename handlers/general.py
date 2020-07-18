@@ -1,6 +1,5 @@
-from actions_lib import process_cancel_command_callback
-from misc import dp
-
+from actions import process_cancel_command_callback
+from loader import dp
 
 # previous command
 # remove last record in a sheet

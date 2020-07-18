@@ -1,2 +1,4 @@
-from .adding_expense import *
-from .general import *
+from .adding_expense import dp
+from .general import dp
+
+__all__ = ['dp']

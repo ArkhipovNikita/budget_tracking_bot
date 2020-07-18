@@ -1,7 +1,7 @@
 import inspect
 import string
 
-from googlesheet import TRANSACTIONS_WKS_NAME
+from utils.googlespreadsheet import TRANSACTIONS_WKS_NAME
 
 
 def ascii_letters_range(start, end):

@@ -5,6 +5,7 @@
 **/.DS_Store
 **/client_id.json
 **/telegrambotwrite-1594670249111-247d4243e67c.json
+**/.env
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

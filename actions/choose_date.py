@@ -2,9 +2,9 @@ from datetime import datetime, timedelta
 
 from pytz import timezone
 
-from actions_lib.general import ActionResult, set_next_state_and_call_on_entry, send_or_edit_message
-from misc import bot
-from third_party_libs.telegramcalendar import telegramcalendar
+from actions.general import ActionResult, set_next_state_and_call_on_entry, send_or_edit_message
+from keyboards import calendar
+from loader import bot
 
 DATE_OPTIONS = ['Today', 'Yesterday', 'Custom date']
 
@@ -31,7 +31,7 @@ def send_custom_date_callback(next_state=None, next_action=None, send_or_edit=0)
     @set_next_state_and_call_on_entry(next_state, next_action)
     async def send_custom_date_options(query, state):
         await send_or_edit_message(query, send_or_edit, text='Choose date of the expense',
-                                   reply_markup=telegramcalendar.create_calendar())
+                                   reply_markup=calendar.create_calendar())
         return ActionResult.SUCCESS
     return send_custom_date_options
 
@@ -39,7 +39,7 @@ def send_custom_date_callback(next_state=None, next_action=None, send_or_edit=0)
 def process_custom_date_callback(next_state=None, next_action=None):
     @set_next_state_and_call_on_entry(next_state, next_action)
     async def process_custom_date_option(query, state):
-        selected, date = await telegramcalendar.process_calendar_selection(bot, query)
+        selected, date = await calendar.process_calendar_selection(bot, query)
         if not selected:
             return ActionResult.FAILED
         await state.update_data(date=date.strftime('%m.%d.%Y'))

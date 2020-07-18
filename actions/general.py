@@ -3,8 +3,8 @@ from enum import Enum
 
 from aiogram.dispatcher.filters.state import default_state
 
-from googlesheet import googlesheet_save_data, Expense
-from misc import bot
+from utils.googlespreadsheet import googlesheet_save_data, Expense
+from loader import bot
 
 
 class ActionResult(Enum):
