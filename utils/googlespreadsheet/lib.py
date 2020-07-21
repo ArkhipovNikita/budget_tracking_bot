@@ -8,7 +8,7 @@ class InvalidRangeError(Exception):
         self.message = "Range %s does't represent one row or column" % diapason
 
 
-def col_or_row(diapason):
+def is_col_or_row(diapason):
     col, row = range(2)
     _from, _to = diapason.split(':')
     if _from[0] == _to[0]:
@@ -20,7 +20,7 @@ def col_or_row(diapason):
 
 def get_options(wks_name, diapason):
     wks = spreadsheet.worksheet(wks_name)
-    c_o_r = col_or_row(diapason)
+    c_o_r = is_col_or_row(diapason)
     res = wks.get(diapason)
     if not c_o_r:
         return list(map(lambda x: x[0], res))
@@ -40,7 +40,7 @@ def find_first_empty_row(wks, column):
     return str(len(str_list) + 1)
 
 
-def googlesheet_save_data(data, table):
+def save_data(data, table):
     fields = table.fields()
     if len(data.keys()) != len(fields):
         raise ValueError('Tables fields and data keys must be equaled')

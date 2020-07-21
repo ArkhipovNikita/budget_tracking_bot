@@ -1,17 +1,5 @@
-import inspect
-import string
-
+from utils.extensions import get_obj_attrs
 from utils.googlespreadsheet import TRANSACTIONS_WKS_NAME
-
-
-def ascii_letters_range(start, end):
-    start_idnx, end_idnx = string.ascii_letters.index(start), string.ascii_letters.index(end)
-    return string.ascii_letters[start_idnx:end_idnx + 1]
-
-
-def get_obj_attrs(obj):
-    attr_names = [a for a in dir(obj) if not inspect.ismethod(a) and not a.startswith('_')]
-    return [getattr(obj, a) for a in attr_names]
 
 
 def change_fields_addresses(table, addresses):
@@ -40,7 +28,7 @@ class ModelBase(type):
 class Model(metaclass=ModelBase):
     @classmethod
     def fields(cls):
-        return list(filter(lambda x: isinstance(x, Field), get_obj_attrs(cls)))
+        return list(filter(lambda x: isinstance(x, Field), list(get_obj_attrs(cls))))
 
 
 class Expense(Model):
