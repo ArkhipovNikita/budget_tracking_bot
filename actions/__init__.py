@@ -1,5 +1,2 @@
-from .choose_date import *
-from .choose_option import *
-from .write_description import *
-from .write_sum import *
-from .general import *
+from .option import *
+from .common import *

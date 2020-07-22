@@ -4,8 +4,9 @@ from aiogram.utils import executor
 from aiogram.utils.executor import start_webhook
 
 from config import WEBHOOK_URL, WEBHOOK_PATH, APP_PORT
-from handlers import dp
-from loader import bot
+import branches
+import handlers
+from loader import bot, dp
 
 
 async def on_startup(dispatcher):
