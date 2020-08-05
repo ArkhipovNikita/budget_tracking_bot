@@ -4,17 +4,17 @@ from actions import save_data_callback
 from blocks import OptionBlock, AnyInputBlock, NumberInputBlock, DateBlock
 from branches.base import BaseBranch
 from loader import dp
-from utils import Expense, ExpenseCategory, Account
+from utils import Account, Income, IncomeCategory
 
 
-class AddingExpenseBranch(BaseBranch):
-    prefix = 'expense'
-    exit_point = save_data_callback(Expense)
+class AddingIncomeBranch(BaseBranch):
+    prefix = 'income'
+    exit_point = save_data_callback(Income)
     category = OptionBlock(
         states_prefix=f'{prefix}:category',
-        options=ExpenseCategory.get_categories,
+        options=IncomeCategory.get_categories,
         option_name='category',
-        entry_message='Choose category of an expense',
+        entry_message='Choose category of an income',
         send_or_edit_entry_action=0,
     )
     date = DateBlock(
@@ -36,12 +36,12 @@ class AddingExpenseBranch(BaseBranch):
         states_prefix=f'{prefix}:account',
         options=Account.get_account_names,
         option_name='account',
-        entry_message='Choose account from whose the expense was charged',
+        entry_message='Choose account to whose the income was received',
         send_or_edit_entry_action=0,
     )
 
 
 dp.register_message_handler(
-    AddingExpenseBranch.category.entry_action,
-    commands='add_expense', state=default_state
+    AddingIncomeBranch.category.entry_action,
+    commands='add_income', state=default_state
 )

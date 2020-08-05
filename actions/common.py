@@ -34,9 +34,12 @@ def set_next_state_and_call_on_entry(next_state: typing.Union[str, State], next_
 def save_data_callback(model: type(gs.Model)):
     async def save_data(query, state):
         data = await state.get_data()
-        await bot.delete_message(chat_id=query.from_user.id, message_id=query.message.message_id)
-        gs.save_data(data, model)
+        # Удалить сообщение, если callback
+        if isinstance(query, CallbackQuery):
+            await bot.delete_message(chat_id=query.from_user.id, message_id=query.message.message_id)
+        model.bind_and_save(data)
         await state.finish()
+        await bot.send_message(chat_id=query.from_user.id, text='Data has been successfully saved')
 
     return save_data
 
@@ -60,5 +63,6 @@ def send_or_edit_message_callback(send_or_edit=0, next_state=None, next_state_ac
     @set_next_state_and_call_on_entry(next_state, next_state_action)
     async def send_or_edit_message_wrapped(query, state):
         await send_or_edit_message(query, send_or_edit, *args, **kwargs)
+        return ActionResult.SUCCESS
 
     return send_or_edit_message_wrapped

@@ -2,7 +2,7 @@ import os
 
 import gspread
 
-from utils.googlespreadsheet.consts import SPREADSHEET_NAME, CREDENTIALS_FILE
+from .constants import CREDENTIALS_FILE, SPREADSHEET_NAME
 
 CREDENTIALS_FILE_PATH = os.path.join('utils', 'googlespreadsheet', 'auth_files', CREDENTIALS_FILE)
 gc = gspread.service_account(CREDENTIALS_FILE_PATH)

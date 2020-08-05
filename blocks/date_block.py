@@ -20,6 +20,7 @@ class DateBlock(BaseBlock):
             options=DateBlock.options,
             text='Choose date of the expense',
             send_or_edit=send_or_edit_entry_action,
+            next_state=self._states.date
         )
 
     def register(self):
