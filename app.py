@@ -4,8 +4,9 @@ import logging
 from aiogram.utils.executor import start_webhook
 
 from config import WEBHOOK_URL, WEBHOOK_PATH, APP_PORT
-import branches
+# handlers must go before branches (cancel command)
 import handlers
+import branches
 from loader import bot, dp
 
 
